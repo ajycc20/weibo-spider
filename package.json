@@ -1,0 +1,17 @@
+{
+  "name": "weibo-spider",
+  "version": "1.0.0",
+  "description": "weibo spider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ajycc20 <ajycc20@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.5.0",
+    "jsdom": "^16.2.2",
+    "node-xlsx": "^0.15.0",
+    "superagent": "^5.2.2"
+  }
+}
