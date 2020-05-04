@@ -31,7 +31,7 @@ var pageConfig = {
   'include': `${subList[sub]}`,
   'timescope':`${startTime}:${endTime}`,
   'region': provinceAll ? ``: `${area[province].code}:${area[province].city[city]}`,
-  'delay': timeDelay
+  'delay': timeDelay * 1000
 }
 
 module.exports = pageConfig
