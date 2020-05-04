@@ -6,8 +6,30 @@ const config = require('./config')
 
 const url = `https://s.weibo.com/weibo?q=${config.q}&${config.type}&${config.include}&timescope=custom:${config.timescope}&region=custom:${config.region}&Refer=g`
 
-const xlsxName = `index.xlsx`
 const cookie = `your cookie`
+
+// 全局变量
+let xlsxName = ''
+let totalPage = '' // page nums
+let urlList = []
+
+
+function getPagetotal(url) {
+  return superagent
+    .get(url)
+    .set({
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7',
+      'Cookie': cookie,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'
+    })
+    .then(res => {
+      const { window } = new JSDOM(res.text)
+      const $ = require('jquery')(window)
+  
+      totalPage = $('.s-scroll').children().length
+    })
+}
 
 function setText(weiboUrl) {
   return superagent
@@ -38,7 +60,7 @@ function setText(weiboUrl) {
 
       var infoFromArr = Array.from(infoFrom).map(val => val.innerHTML) // 数组值
 
-      var createTime = infoFromArr.map(val => val.match(regcreateTime)).map(val => val[1]) // 创建时间
+      var createTime = infoFromArr.map(val => val.match(regcreateTime)).map(val => val ? val[1]: '') // 创建时间
       var deviceInfo = infoFromArr.map(val => val.match(regFrom)).map(val => val ? val[1] : '') // 设备信息
 
       var controlPanel = $('.card-act ul li a')
@@ -74,7 +96,7 @@ function setText(weiboUrl) {
             data: datas
           }
         ])
-        fs.writeFile(`./${xlsxName}`, buffer, err => {
+        fs.writeFile(`./${xlsxName}.xlsx`, buffer, err => {
           if (err) {
             console.log(err)
           } else {
@@ -86,4 +108,27 @@ function setText(weiboUrl) {
     })
 }
 
-setText(url)
+getPagetotal(url)
+  .then( _ => {
+    // totalPage
+    urlList.push(url)
+    for (let i = 1; i < totalPage; i++) {
+      urlList.push(`${url}&page=${i+1}`)
+    }
+
+    var xlsxCount = 1 // xlsx name +
+    var urlCount = 0 // url list +
+
+    function parse() {
+      if (xlsxCount <= totalPage) {
+        xlsxName = `page${xlsxCount++}`
+
+        setText(urlList[urlCount++])
+        console.log(xlsxName)
+      }
+    }
+
+    setInterval(parse, config['delay'])
+  })
+
+

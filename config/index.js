@@ -1,6 +1,7 @@
 
 var isTopic = true // 如果是 #话题# 类型 则true
-var keywords = '疫情'
+var searchWords = '疫情'
+var keywords = encodeURI(searchWords)
 
 var typeList = require('./typelist.json')
 // 可选类型：全部  热门  原创  关注人  认证用户  媒体  观点
@@ -14,18 +15,23 @@ var sub = '含图片'
 var startTime = '' // yyyy-mm-dd-h
 var endTime = '' // yyyy-mm-dd-h
 
-// region=custom:61:1
+// 如果province == 全部, 应该有provinceAll = true
 var area = require('./region.json') // 陕西西安
 var province = '陕西' // 省份
 var city = '西安' // 城市
 
+var provinceAll = true
 
-var urlConfig = {
+// 下载时间间隔 单位：秒(s)
+var timeDelay = 10 // default
+
+var pageConfig = {
   'q': isTopic ? `%23${keywords}%23` : `${keywords}`,
   'type': `${typeList[type]}`,
   'include': `${subList[sub]}`,
   'timescope':`${startTime}:${endTime}`,
-  'region': `${area[province].code}:${area[province].city[city]}`
+  'region': provinceAll ? ``: `${area[province].code}:${area[province].city[city]}`,
+  'delay': timeDelay
 }
 
-module.exports = urlConfig
+module.exports = pageConfig
