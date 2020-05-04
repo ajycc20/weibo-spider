@@ -1,6 +1,6 @@
 # weibo-spider
 
-## Install
+## Install & Start
 
 ```bash
 # clone
@@ -28,14 +28,22 @@ type = '全部'
 sub = '全部'
 
 # startTime endTime
-# eg. 2020年5月1日9时 ~ 2020年5月1日20时
+## eg. 2020年5月1日9时 ~ 2020年5月1日20时
 startTime = '2020-05-01-9'
 endTime = '2020-05-01-20'
 
 # province city
-# view in config/region.json
+## view in config/region.json
 province = '陕西'
 city = '西安'
+
+# provinceAll
+## if province == 全部
+provinceAll = true
+
+# delay default(10 s)
+## download delay
+timeDelay = 10
 ```
 
 ### index.js 
@@ -51,4 +59,14 @@ the xlsx flie name
 # cookie
 your weibo cookie
 
+```
+
+### result
+```bash
+# generate multiple xlsx files based on page numbers
+## eg. 
+##### page1.xlsx
+##### page2.xlsx
+##### page3.xlsx
+##### ...
 ```
