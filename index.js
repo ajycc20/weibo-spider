@@ -2,8 +2,9 @@ const superagent = require('superagent')
 const fs = require('fs')
 const xlsx = require('node-xlsx')
 const { JSDOM } = require('jsdom')
+const config = require('./config')
 
-const url = ``
+const url = `https://s.weibo.com/weibo?q=${config.q}&${config.type}&${config.include}&timescope=custom:${config.timescope}&region=custom:${config.region}&Refer=g`
 
 const xlsxName = `index.xlsx`
 const cookie = `your cookie`

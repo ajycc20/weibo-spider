@@ -1,0 +1,7 @@
+{
+  "全部": "suball=1",
+  "含图片": "haspic=1",
+  "含视频": "hasvideo=1",
+  "含音乐": "hasmusic=1",
+  "含短链": "haslink=1"
+}

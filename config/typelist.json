@@ -1,0 +1,9 @@
+{
+  "全部": "typeall=1",
+  "热门": "xsort=hot",
+  "原创": "scope=ori",
+  "关注人": "atten=1", 
+  "认证用户": "vip=1",  
+  "媒体": "category=4",
+  "观点": "viewpoint=1"
+}
